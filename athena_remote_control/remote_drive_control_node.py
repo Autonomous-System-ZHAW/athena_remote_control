@@ -21,19 +21,17 @@ class RemoteControl(Node):
             depth=10,
         )
 
-        self.remot_controller_sub = self.create_subscription(
-            Joy, "/joy", self.remote_controller_callback, controller_qos
+        self.remot_autonomous_controller_sub = self.create_subscription(
+            Joy, "/joy", self.remote_autonomous_controller_callback, controller_qos
         )
 
         self.ackermann_pub = self.create_publisher(
             AckermannDriveStamped, "/ackermann_cmd", controller_qos
         )
 
-    def remote_controller_callback(self, joy: Joy):
-
-        steering = self.steering_mapping(joy.axes[0])
-
-        target = self.speed_mapping(joy.axes[5])
+    def remote_autonomous_controller_callback(self, joy: Joy):
+        steering = self.steering_mapping(joy.buttons[0])
+        target = self.speed_mapping(joy.buttons[5])
 
         self.current_speed = self.ramp(
             target, self.current_speed, accel_limit=0.05, decel_limit=0.05
