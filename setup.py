@@ -23,7 +23,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "remote_control = athena_remote_control.remote_control_node:main",
+            "remote_control = athena_remote_control.remote_autonomous_control_node:main",
         ],
     },
 )
